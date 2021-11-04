@@ -10,9 +10,16 @@ Exemplo: 'abcde', a metade da frente é 'abc' e a de trás é 'de'.
 Finalmente, dadas duas strings a e b, retorne uma string na forma:
 a-frente + b-frente + a-trás + b-trás
 """
+import math
+
+def get_half_index(s):
+    return math.ceil(len(s)/2)
+
 def front_back(a, b):
     # +++ SUA SOLUÇÃO +++
-    return
+    half_a = get_half_index(a)
+    half_b = get_half_index(b)
+    return ''.join((a[:half_a], b[:half_b], a[half_a:], b[half_b:]))
 
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---
