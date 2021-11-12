@@ -57,6 +57,37 @@ import sys
 # +++ SUA SOLUÇÃO +++
 # Defina as funções print_words(filename) e print_top(filename).
 
+def process_file(filename):
+    words_dict = {}
+
+    with open(filename) as file:
+        words = file.read().lower().split()
+
+        for word in words:
+            if word in words_dict.keys():
+                words_dict[word] += 1
+            else:
+                words_dict[word] = 1
+
+    return words_dict
+
+def sort_by_word(my_dict):
+    return {k: v for k, v in sorted(my_dict.items(), key=lambda i: i[0])}
+
+def sort_by_occurrences_top_20(my_dict):
+    return {k: v for k, v in sorted(my_dict.items(), key=lambda i: i[1], reverse=True)[:20]}
+
+def print_formatted_dict(my_dict):
+    for k, v in my_dict.items():
+        print(f'{k} {v}')
+
+def print_words(words_dict):
+    words_dict = sort_by_word(words_dict)
+    print_formatted_dict(words_dict)
+
+def print_top(words_dict):
+    words_dict = sort_by_occurrences_top_20(words_dict)
+    print_formatted_dict(words_dict)
 
 # A função abaixo chama print_words() ou print_top() de acordo com os
 # parêtros do programa.
@@ -67,10 +98,12 @@ def main():
 
     option = sys.argv[1]
     filename = sys.argv[2]
+    words_dict = process_file(filename)
+
     if option == '--count':
-        print_words(filename)
+        print_words(words_dict)
     elif option == '--topcount':
-        print_top(filename)
+        print_top(words_dict)
     else:
         print('unknown option: ' + option)
         sys.exit(1)
